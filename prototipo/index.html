@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gasparzinho – protótipo</title>
+<style>
+:root{--bg:#eeedf6;--card:#fff;--ink:#1d1b3a;--mute:#6e6c8a;--line:#e5e4f0;--brand:#4f46b8;--brand-d:#3b3590;--soft:#ecebfa;--warn:#b45309;--warn-bg:#fef3c7;--bad:#b91c1c}
+*{box-sizing:border-box;margin:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);padding:24px 16px 48px}
+h1{font-size:20px;text-align:center}
+.sub{color:var(--mute);text-align:center;font-size:14px;margin:6px auto 28px;max-width:560px}
+.row{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
+figure{display:flex;flex-direction:column;align-items:center;gap:10px}
+figcaption{font-size:13px;color:var(--mute);max-width:280px;text-align:center}
+figcaption b{color:var(--ink)}
+.phone{width:280px;height:580px;background:#fff;border:8px solid #111;border-radius:36px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.status{height:26px;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font-size:11px;font-weight:600}
+.bar{padding:6px 16px 10px;display:flex;justify-content:space-between;align-items:center}
+.bar h2{font-size:17px}
+.pill{font-size:11px;background:var(--soft);color:var(--brand-d);padding:3px 8px;border-radius:99px;font-weight:600}
+.chat{flex:1;padding:8px 14px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.msg{max-width:84%;padding:9px 12px;border-radius:16px;font-size:13px;line-height:1.35}
+.me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+.ai{align-self:flex-start;background:#f1f4f3;border-bottom-left-radius:4px}
+.inp{display:flex;gap:8px;align-items:center;padding:10px 12px 14px;border-top:1px solid var(--line)}
+.inp .f{flex:1;background:#f1f4f3;border-radius:99px;padding:10px 14px;font-size:13px;color:var(--mute)}
+.mic{width:40px;height:40px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:17px}
+.sum{margin:6px 16px;border:1px solid var(--line);border-radius:16px;padding:14px}
+.amt{font-size:30px;font-weight:700;margin:2px 0 10px}
+.kv{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-top:1px solid var(--line)}
+.kv span:first-child{color:var(--mute)}
+.alert{margin:8px 16px;background:var(--warn-bg);color:var(--warn);border-radius:12px;padding:9px 12px;font-size:12px}
+.btns{margin-top:auto;padding:12px 16px 18px;display:flex;flex-direction:column;gap:8px}
+.btn{border-radius:14px;padding:13px;text-align:center;font-weight:600;font-size:14px}
+.pri{background:var(--brand);color:#fff}.sec{background:#f1f4f3;color:var(--ink)}
+.list{padding:0 16px;flex:1;overflow:hidden}
+.chips{display:flex;gap:6px;padding:0 16px 8px}
+.chip{font-size:11px;padding:5px 10px;border-radius:99px;background:#f1f4f3}.chip.on{background:var(--ink);color:#fff}
+.tx{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.tx small{display:block;color:var(--mute);font-size:11px;margin-top:2px}
+.tx .v{font-weight:600;text-align:right}
+.ok{color:var(--brand-d);font-size:11px;font-weight:600}.no{color:var(--bad);font-size:11px;font-weight:600}
+.nav{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding:9px 0 12px;font-size:11px;color:var(--mute)}
+.nav .on{color:var(--brand-d);font-weight:700}
+.other{flex:1;background:linear-gradient(#dfe7f5,#f4f6fb);padding:16px;font-size:13px;color:#445}
+.other .blk{height:52px;background:#fff;border-radius:12px;margin-bottom:10px;opacity:.85}
+.float{position:absolute;right:12px;bottom:84px;width:52px;height:52px;border-radius:50%;background:#2b2766;color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 6px 16px rgba(0,0,0,.28)}
+.sheet{position:absolute;left:10px;right:10px;bottom:10px;background:#fff;border-radius:20px;box-shadow:0 8px 28px rgba(0,0,0,.3);padding:12px}
+.shade{flex:1;background:#2b3330;padding:12px;color:#fff;display:flex;flex-direction:column;gap:10px}
+.qs{display:flex;gap:8px}.qs div{flex:1;background:#3b4541;border-radius:14px;padding:10px;font-size:11px;text-align:center}
+.qs .hot{background:var(--brand)}
+.nt{background:#3b4541;border-radius:14px;padding:10px 12px;font-size:12px}.nt small{color:#b8c4bf;display:block;margin-bottom:3px}
+.dim{position:absolute;inset:0;background:rgba(10,20,17,.55)}
+.listen{position:absolute;left:10px;right:10px;bottom:10px;background:#fff;border-radius:24px;padding:22px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.listen small{color:var(--mute);font-size:12px}
+.micbig{position:relative;width:84px;height:84px;margin-bottom:6px}
+.micbig span{position:absolute;inset:0;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:34px}
+.micbig i{position:absolute;inset:-12px;border-radius:50%;border:3px solid var(--brand);opacity:.35;animation:p 1.6s ease-out infinite}
+@keyframes p{from{transform:scale(.8);opacity:.6}to{transform:scale(1.25);opacity:0}}
+@media (prefers-reduced-motion:reduce){.micbig i{animation:none}}
+.notes{max-width:760px;margin:36px auto 0;background:var(--card);border-radius:16px;padding:20px 22px;font-size:14px;line-height:1.5}
+.notes h3{font-size:15px;margin-bottom:8px}.notes li{margin:4px 0 4px 18px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ghost" viewBox="0 0 64 64">
+    <path d="M12 56V28C12 15 21 8 32 8s20 7 20 20v28l-6.5-5-6.5 5-7-5-6.5 5-6.5-5z" fill="#fff" stroke="#cfcdee" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="25" cy="28" r="3.5" fill="#1d1b3a"/><circle cx="39" cy="28" r="3.5" fill="#1d1b3a"/>
+    <circle cx="20" cy="35" r="3" fill="#f8b4c8" opacity=".7"/><circle cx="44" cy="35" r="3" fill="#f8b4c8" opacity=".7"/>
+    <path d="M27 38q5 5 10 0" fill="none" stroke="#1d1b3a" stroke-width="2.4" stroke-linecap="round"/>
+  </symbol>
+</svg>
+<h1><svg width="28" height="28" style="vertical-align:-7px"><use href="#ghost"/></svg> Gasparzinho · protótipo de telas</h1>
+<p class="sub">Protótipo estático de baixa fidelidade. Valores, nomes e chaves são fictícios.</p>
+
+<div class="row">
+
+<figure>
+<div class="phone">
+  <div class="status"><span>09:41</span><span>●●● 5G</span></div>
+  <div class="bar"><h2><svg width="24" height="24" style="vertical-align:-6px"><use href="#ghost"/></svg> Gasparzinho</h2><span class="pill">Você confirma tudo</span></div>
+  <div class="chat">
+    <div class="msg me">Manda 50 reais pro João da padaria</div>
+    <div class="msg ai">Encontrei <b>João Pereira</b> na sua agenda. Preparei o pagamento, confira na próxima tela.</div>
+    <div class="msg me">Quanto gastei de Pix esse mês?</div>
+    <div class="msg ai">R$ 1.240,00 em 14 transações.</div>
+  </div>
+  <div class="inp"><div class="f">Digite ou segure o microfone…</div><div class="mic">🎙</div></div>
+  <div class="nav"><span class="on">Chat</span><span>Histórico</span><span>Ajustes</span></div>
+</div>
+<figcaption><b>1. Chat.</b> Texto ou voz. O app só prepara; nunca envia sozinho.</figcaption>
+</figure>
+
+<figure>
+<div class="phone">
+  <div class="status"><span>09:41</span><span>●●● 5G</span></div>
+  <div class="bar"><h2>Confirmar Pix</h2></div>
+  <div class="sum">
+    <div style="font-size:12px;color:var(--mute)">Você vai pagar</div>
+    <div class="amt">R$ 50,00</div>
+    <div class="kv"><span>Para</span><span>João Pereira</span></div>
+    <div class="kv"><span>Chave</span><span>•••.456.789-••</span></div>
+    <div class="kv"><span>Banco</span><span>Banco Exemplo</span></div>
+    <div class="kv"><span>Quando</span><span>Agora</span></div>
+  </div>
+  <div class="alert">Primeira vez que você paga este destinatário.</div>
+  <div class="btns">
+    <div class="btn pri">Confirmar com biometria</div>
+    <div class="btn sec">Cancelar</div>
+  </div>
+</div>
+<figcaption><b>2. Confirmação.</b> Dados lidos do cadastro do destinatário, não do que o texto disse. Biometria obrigatória.</figcaption>
+</figure>
+
+<figure>
+<div class="phone">
+  <div class="status"><span>09:41</span><span>●●● 5G</span></div>
+  <div class="bar"><h2>Histórico</h2><span class="pill">Exportar</span></div>
+  <div class="chips"><span class="chip on">Todos</span><span class="chip">Enviados</span><span class="chip">Cancelados</span></div>
+  <div class="list">
+    <div class="tx"><div>João Pereira<small>Hoje, 09:42 · por voz</small></div><div class="v">R$ 50,00<br><span class="ok">Concluído</span></div></div>
+    <div class="tx"><div>Maria Souza<small>Ontem, 18:10 · por texto</small></div><div class="v">R$ 120,00<br><span class="ok">Concluído</span></div></div>
+    <div class="tx"><div>Pedro Lima<small>20/10, 14:03 · por texto</small></div><div class="v">R$ 300,00<br><span class="no">Cancelado por você</span></div></div>
+    <div class="tx"><div>Padaria Central<small>19/10, 07:55 · por voz</small></div><div class="v">R$ 18,50<br><span class="ok">Concluído</span></div></div>
+  </div>
+  <div class="nav"><span>Chat</span><span class="on">Histórico</span><span>Ajustes</span></div>
+</div>
+<figcaption><b>3. Histórico.</b> Inclui os cancelados e o canal usado (voz ou texto), para auditoria.</figcaption>
+</figure>
+
+<figure>
+<div class="phone">
+  <div class="status" style="background:#2b3330;color:#fff"><span>09:41</span><span>●●● 5G</span></div>
+  <div class="shade">
+    <div class="qs"><div>Wi-Fi</div><div>Som</div><div class="hot">🎙 Pix<br>por voz</div></div>
+    <div class="nt"><small>Gasparzinho · agora</small>Pix de R$ 50,00 para João Pereira aguardando confirmação.</div>
+    <div class="nt"><small>Gasparzinho · ontem</small>Pix de R$ 120,00 enviado a Maria Souza.</div>
+  </div>
+</div>
+<figcaption><b>4. Barra de notificações.</b> Atalho rápido para falar com o agente e avisos de pendência.</figcaption>
+</figure>
+
+<figure>
+<div class="phone">
+  <div class="status"><span>09:41</span><span>●●● 5G</span></div>
+  <div class="other"><b>Outro aplicativo</b><br><br><div class="blk"></div><div class="blk"></div><div class="blk"></div></div>
+  <div class="dim"></div>
+  <div class="listen">
+    <svg width="46" height="46" style="margin-bottom:-4px"><use href="#ghost"/></svg>
+    <div class="micbig"><i></i><span>🎙</span></div>
+    <b>Gasparzinho está ouvindo…</b>
+    <small>Diga, por exemplo: "Paga 50 pro João"</small>
+    <div class="btn sec" style="width:100%;margin-top:6px">Cancelar</div>
+  </div>
+</div>
+<figcaption><b>5. Ouvindo.</b> Aparece sobre qualquer app depois do atalho da barra de notificações ou da bolha.</figcaption>
+</figure>
+
+<figure>
+<div class="phone">
+  <div class="status"><span>09:41</span><span>●●● 5G</span></div>
+  <div class="other"><b>Outro aplicativo</b><br><br><div class="blk"></div><div class="blk"></div><div class="blk"></div></div>
+  <div class="float"><svg width="34" height="34"><use href="#ghost"/></svg></div>
+  <div class="sheet">
+    <div class="msg me" style="max-width:100%;margin-bottom:8px">Paga 50 pro João</div>
+    <div class="msg ai" style="max-width:100%;margin-bottom:8px">Pronto para pagar R$ 50,00 a João Pereira.</div>
+    <div class="btn pri">Revisar e confirmar</div>
+  </div>
+</div>
+<figcaption><b>6. Chat flutuante (Android).</b> Bolha sobre qualquer app. Revisar abre a tela 2.</figcaption>
+</figure>
+
+</div>
+
+<div class="notes">
+<h3>O que este protótipo assume (para você corrigir)</h3>
+<ul>
+<li>Só 3 abas: Chat, Histórico, Ajustes. Nada além do Pix.</li>
+<li>Toda transação passa pela tela 2, sem exceção, nesta primeira versão.</li>
+<li>Chave do destinatário aparece mascarada (LGPD: minimização).</li>
+<li>O destinatário pode ser um contato da agenda do aparelho (permissão de contatos, pedida só no primeiro uso). Se o contato não tiver chave Pix cadastrada, o app pergunta a chave.</li>
+<li>As telas 5 e 6 existem só no Android; no iOS o equivalente é o atalho da tela inicial, Siri/Atalhos e widget.</li>
+</ul>
+</div>
+</body>
+</html>
